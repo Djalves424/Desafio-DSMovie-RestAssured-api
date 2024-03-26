@@ -14,12 +14,12 @@ public class ScoreDTO {
 	
 	private static final DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
 
-	@NotNull(message = "Campo requerido")
+	@NotNull(message = "Required field")
 	private Long movieId;
 
-	@NotNull(message = "Campo requerido")
-	@Min(value = 0, message = "Valor mínimo 0")
-	@Max(value = 5, message = "Valor máximo 5")
+	@NotNull(message = "Required field")
+	@Min(value = 0, message = "Value minimum 0")
+	@Max(value = 5, message = "Value maximum 5")
 	private Double score;
 
 	public ScoreDTO(Long movieId, Double score) {
