@@ -6,60 +6,69 @@ import java.util.Locale;
 
 import com.devsuperior.dsmovie.entities.MovieEntity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.URL;
 
 public class MovieDTO {
 
-	private static final DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+    private static final DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
 
-	private Long id;
-	
-	@NotBlank(message = "Campo requerido")
-	@Size(min = 5, max = 80, message = "Tamanho deve ser entre 5 e 80 caracteres")
-	private String title;
-	
-	private Double score;
-	
-	private Integer count;
-	
-	private String image;
+    @Schema(description = "Database generated movie ID")
+    private Long id;
 
-	public MovieDTO(Long id, String title, Double score, Integer count, String image) {
-		this.id = id;
-		this.title = title;
-		this.score = Double.valueOf(df.format(score));
-		this.count = count;
-		this.image = image;
-	}
+    @NotBlank(message = "Required field")
+    @Size(min = 5, max = 80, message = "Title must be between 5 and 80 characters")
+    @Schema(description = "Movie title")
+    private String title;
 
-	public MovieDTO(MovieEntity movie) {
-		this(movie.getId(), movie.getTitle(), movie.getScore(), movie.getCount(), movie.getImage());
-	}
+    @PositiveOrZero(message = "Score should be greater than or equal to zero")
+    private Double score;
 
-	public Long getId() {
-		return id;
-	}
+    @PositiveOrZero(message = "Count should be greater than or equal to zero")
+    private Integer count;
 
-	public String getTitle() {
-		return title;
-	}
+    @NotBlank(message = "Required field")
+    @URL(message = "Field must be a valid url")
+    private String image;
 
-	public Double getScore() {
-		return score;
-	}
-	
-	public Integer getCount() {
-		return count;
-	}
+    public MovieDTO(Long id, String title, Double score, Integer count, String image) {
+        this.id = id;
+        this.title = title;
+        this.score = Double.valueOf(df.format(score));
+        this.count = count;
+        this.image = image;
+    }
 
-	public String getImage() {
-		return image;
-	}
+    public MovieDTO(MovieEntity movie) {
+        this(movie.getId(), movie.getTitle(), movie.getScore(), movie.getCount(), movie.getImage());
+    }
 
-	@Override
-	public String toString() {
-		return "MovieDTO [id=" + id + ", title=" + title + ", score=" + score + ", count=" + count + ", image=" + image
-				+ "]";
-	}
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieDTO [id=" + id + ", title=" + title + ", score=" + score + ", count=" + count + ", image=" + image
+                + "]";
+    }
 }
