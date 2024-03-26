@@ -4,97 +4,104 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_movie")
 public class MovieEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String title;
-	private Double score;
-	private Integer count;
-	private String image;
-	
-	@OneToMany(mappedBy = "id.movie")
-	private Set<ScoreEntity> scores = new HashSet<>();
-	
-	public MovieEntity() {
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String title;
+    private Double score;
+    private Integer count;
+    private String image;
 
-	public MovieEntity(Long id, String title, Double score, Integer count, String image) {
-		this.id = id;
-		this.title = title;
-		this.score = score;
-		this.count = count;
-		this.image = image;
-	}
+    @ManyToOne
+    @JoinColumn(name = "genre_id")
+    private GenreEntity genreEntity;
 
-	public Long getId() {
-		return id;
-	}
+    @OneToMany(mappedBy = "id.movie")
+    private Set<ScoreEntity> scores = new HashSet<>();
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public MovieEntity() {
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public MovieEntity(Long id, String title, Double score, Integer count, String image) {
+        this.id = id;
+        this.title = title;
+        this.score = score;
+        this.count = count;
+        this.image = image;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Double getScore() {
-		return score;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setScore(Double score) {
-		this.score = score;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public Integer getCount() {
-		return count;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setCount(Integer count) {
-		this.count = count;
-	}
+    public Double getScore() {
+        return score;
+    }
 
-	public String getImage() {
-		return image;
-	}
+    public void setScore(Double score) {
+        this.score = score;
+    }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+    public Integer getCount() {
+        return count;
+    }
 
-	public Set<ScoreEntity> getScores() {
-		return scores;
-	}
+    public void setCount(Integer count) {
+        this.count = count;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+    public String getImage() {
+        return image;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MovieEntity other = (MovieEntity) obj;
-		return Objects.equals(id, other.id);
-	}
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Set<ScoreEntity> getScores() {
+        return scores;
+    }
+
+    public GenreEntity getGenreEntity() {
+        return genreEntity;
+    }
+
+    public void setGenreEntity(GenreEntity genreEntity) {
+        this.genreEntity = genreEntity;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        MovieEntity other = (MovieEntity) obj;
+        return Objects.equals(id, other.id);
+    }
 }
